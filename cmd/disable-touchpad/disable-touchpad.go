@@ -12,11 +12,10 @@ import (
 	"syscall"
 	"time"
 
-	dispatcher2 "disable-touchpad/internal/disable-touchpad/dispatcher"
-	"disable-touchpad/internal/disable-touchpad/respository/syclient"
-
 	evdev "github.com/gvalkov/golang-evdev"
-	cli "github.com/urfave/cli/v2"
+	touchpadDispatcher "github.com/mark-marushak/disable-touchpad/internal/disable-touchpad/dispatcher"
+	"github.com/mark-marushak/disable-touchpad/internal/disable-touchpad/respository/syclient"
+	"github.com/urfave/cli/v2"
 )
 
 const touchpadEvent = "/dev/input/event4"
@@ -54,7 +53,7 @@ func action(c *cli.Context) error {
 		log.Fatal(err)
 	}
 
-	dispatcher := dispatcher2.NewDispatcher(&syclient.Touchpad{})
+	dispatcher := touchpadDispatcher.NewDispatcher(&syclient.Touchpad{})
 	if err = dispatcher.On(); err != nil {
 		return fmt.Errorf("make sure touchpad is enabled: %w", err)
 	}
