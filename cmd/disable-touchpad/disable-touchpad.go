@@ -58,6 +58,9 @@ func action(c *cli.Context) error {
 		return fmt.Errorf("make sure touchpad is enabled: %w", err)
 	}
 
+	// enable when unexpected shutdown.
+	defer func() { _ = dispatcher.On() }()
+
 	go func() {
 		err = dispatcher.Watch(c.Context)
 		if err != nil {
